@@ -10,6 +10,11 @@ dependencies:
   - typer
   - loguru
   - tqdm
+  - jupyter
+  - pandas
+  - numpy
+  - seaborn
+  - matplotlib
   - pip:
     - python-dotenv
     - mkdocs
