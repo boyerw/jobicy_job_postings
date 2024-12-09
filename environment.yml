@@ -10,11 +10,13 @@ dependencies:
   - typer
   - loguru
   - tqdm
+# Data   
   - jupyter
   - pandas
   - numpy
   - seaborn
   - matplotlib
+# Cloud data pipelines
   - terraform
   - awscli
   - pip:
