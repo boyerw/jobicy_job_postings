@@ -15,6 +15,7 @@ dependencies:
   - numpy
   - seaborn
   - matplotlib
+  - terraform
   - pip:
     - python-dotenv
     - mkdocs
