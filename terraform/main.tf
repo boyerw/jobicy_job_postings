@@ -13,14 +13,14 @@ terraform {
 provider aws {}
 
 # resources
-resource "aws_instance" "webserver" {
-    # The first Linux AMI in the AMI catalog 
-    ami = "ami-0453ec754f44f9a4a"
-    instance_type = "t2.micro"
-    tags = {
-        name = "ExampleServer"
-    }
-}
+# resource "aws_instance" "webserver" {
+#     # The first Linux AMI in the AMI catalog 
+#     ami = "ami-0453ec754f44f9a4a"
+#     instance_type = "t2.micro"
+#     tags = {
+#         name = "ExampleServer"
+#     }
+# }
 
 # input
 
