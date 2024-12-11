@@ -52,6 +52,18 @@ df = pd.json_normalize(json_response['jobs'])
 # Remove null values in numeric columns
 df['salaryMissing'] = (df.loc[:, 'annualSalaryMin'].isna() + df.loc[:, 'annualSalaryMax'].isna()) > 0
 df.loc[:, ['annualSalaryMin','annualSalaryMax']] = df.loc[:, ['annualSalaryMin','annualSalaryMax']].fillna(value=0, axis=0)
+df['annualSalaryMin'] = df['annualSalaryMin'].copy().astype(int)
+df['annualSalaryMax'] = df['annualSalaryMax'].copy().astype(int)
+
+# Typing
+numeric_cols = ['annualSalaryMin', 'annualSalaryMax', 'salaryMissing']
+for col in df.columns:
+    if col in numeric_cols: continue
+    df[col] = df[col].copy().astype('string')        
+    
+df['annualSalaryMin'] = df['annualSalaryMin'].copy().astype(int)
+df['annualSalaryMax'] = df['annualSalaryMax'].copy().astype(int)
+df['salaryMissing'] = df['salaryMissing'].copy().astype(bool)
 
 # Enrich with metadata 
 df["loadDate"] = datetime.date.today()
