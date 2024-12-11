@@ -1,12 +1,10 @@
 resource "aws_glue_job" "extract_postings_job" {
     name         = "Jobicy-extract-postings-job"
     role_arn     = aws_iam_role.glue_role.arn
-    # glue_version = "5.0"
 
     command {
         name            = "glue_extract"
         script_location = "s3://${aws_s3_bucket.scripts.id}/${aws_s3_object.glue_job_extract_postings_script.id}"
-        python_version  = 3
     }
 
     default_arguments = {
