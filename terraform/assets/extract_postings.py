@@ -9,7 +9,7 @@ import json
 import pandas as pd
 from pandas import DataFrame
 import datetime
-from awsglue.context import GLueContext
+from awsglue.context import GlueContext
 from awsglue.dynamicframe import DynamicFrame
 from awsglue.job import Job
 from awsglue.transforms import *
@@ -22,10 +22,10 @@ args = getResolvedOptions(
     [
         "JOB_NAME",
         "s3_bucket",
-        "source_path",
+#         "source_path",
         "target_path",
-        "compression",
-        "partition_cols"
+#         "compression",
+#         "partition_cols"
     ]
 )
 
@@ -49,6 +49,10 @@ json_response = json.loads(response.content)
 # Convert JSON data to Pandas DataFrame
 df = pd.json_normalize(json_response['jobs'])
 
+# Remove null values in numeric columns
+df['salaryMissing'] = (df.loc[:, 'annualSalaryMin'].isna() + df.loc[:, 'annualSalaryMax'].isna()) > 0
+df.loc[:, ['annualSalaryMin','annualSalaryMax']] = df.loc[:, ['annualSalaryMin','annualSalaryMax']].fillna(value=0, axis=0)
+
 # Enrich with metadata 
 df["loadDate"] = datetime.date.today()
 
@@ -68,7 +72,7 @@ connection_options = (
 datasink = glueContext.write_dynamic_frame.from_options(
     frame=dest_gdf,
     connection_type="s3",
-    format="glueparquet",
+    format="csv",
     connection_options=connection_options,
     # format_options={"compression": args["compression"]},
     transformation_ctx="datasink",
